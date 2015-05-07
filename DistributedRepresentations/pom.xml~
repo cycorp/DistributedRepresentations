@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.cyc.tool</groupId>
+  <artifactId>DistributedRepresentations</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  
+  <parent>
+    <groupId>com.cyc.project.kbtaxonomy</groupId>
+    <artifactId>KBTaxonomyParent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../KBTaxonomyParent</relativePath>
+  </parent>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+  
+  <dependencies>
+    <dependency>
+      <groupId>net.sourceforge.owlapi</groupId>
+      <artifactId>owlapi-distribution</artifactId>
+      <version>4.0.1</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>org.mapdb</groupId>
+      <artifactId>mapdb</artifactId>
+      <version>1.0.6</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.cyc.tool</groupId>
+      <artifactId>CycMapDBTools</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <type>jar</type>
+    </dependency>
+    
+    <dependency>
+      <groupId>com.cyc.tool</groupId>
+      <artifactId>OwlTools</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+
+
+  </dependencies>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+</project>
