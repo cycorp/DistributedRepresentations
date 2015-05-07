@@ -8,16 +8,17 @@ Included
 --------
 
 Projects:
-* DistributedRepresentationsProject - The parent pom for the other projects
+* DistributedRepresentationsParent - The parent pom for the other projects
 * OwlTools - Classes for accessing the OpenCyc OWL export
 * CycMapDBTools - Some configuration defaults for the other other projects
 * DistributedRepresentations - Project to access Word2Vec sources
 * ConceptFinder - Methods to find nearby concepts in the Word2Vec space
 
 Other Files:
-* GoogleNews-vectors-negative300.bin.gz - The GoogleNews Word2Vec Space
-* BioASQ - The Word2Vec space developed by BioASQ and trained on Pubmed sources
-* owl-export-unversioned.owl - The OpenCyc export
+* Download the distributedRepresentationsDownloads file [here](https://drive.google.com/file/d/0B95A6Z6CLEXibm1DYnBzN3NkZEU/view?usp=sharing) and then extract the following:
+ * GoogleNews-vectors-negative300.bin.gz - The GoogleNews Word2Vec Space
+ * BioASQ - The Word2Vec space developed by BioASQ and trained on Pubmed sources
+ * owl-export-unversioned.owl - The OpenCyc export
 * This README file
 
 Requirements
