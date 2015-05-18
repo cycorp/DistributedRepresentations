@@ -42,6 +42,7 @@ At present, the library supports two sources:
 To use these libraries, you will need to update some file paths to your local system as follows:
 
 In DistributedRepresentations:
+
 1. `GoogleNewsW2VSpace.java`
   * Modify the `w2vfile` variable so that it points to where you save the GoogleNews-vectors archive included in this repository
 2. `BiologyW2VSpace.java`
