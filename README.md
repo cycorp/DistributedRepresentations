@@ -51,11 +51,13 @@ In DistributedRepresentations:
   * Modify the `fallBackLocation` variable to a directory in your file system, ideally, where you saved the GoogleNews archive
   
 In ConceptFinder:  
+
 1. `ConceptFinderConfig.java`
   * Modify the `fallBackLocation` variable to a directory in your file system, ideally, where you saved the GoogleNews archive
   * Modify the `w2vVectorFile` variable accordingly
   
 In OwlTools:
+
 1. `OwlToolsConfig.java`
   * Modify the `ocyclocation` variable to match the location of where you save the OpenCyc export file, `owl-export-unversioned.owl`
   * Modify the `fallBackLocation` variable to match the location you gave in `ConceptFinderConfig.java`
