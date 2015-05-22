@@ -30,10 +30,12 @@ public class OwlToolsConfig extends MapDBConfiguration{
   /**
    * The location of the OpenCyc OWL export file.
    */
-  final public static String ocycLocation = "/cyc/projects/kbTaxonomy/owl-export-unversioned.owl";
+//  final public static String ocycLocation = "/cyc/projects/kbTaxonomy/owl-export-unversioned.owl";
+  final public static String ocycLocation = "/home/cyc/TaxonomyViewer/data/owl-export-unversioned.owl";
   private static final String allConceptsName = "allConcepts";
   private static final String conceptsWithTermsName = "termsWithConcepts";
-  private static final String fallBackDBLocation = "/cyc/projects/kbTaxonomy/Experiments/ConceptFinder/";
+//  private static final String fallBackDBLocation = "/cyc/projects/kbTaxonomy/Experiments/ConceptFinder/";
+  private static final String fallBackDBLocation = "/home/cyc/TaxonomyViewer/data/";
   
   // From OwlToolsConfig.java in W2VOCyc
   private static final String ocycTermDBFile = "/ocycTerm";
