@@ -19,7 +19,6 @@ package com.cyc.tool.conceptfinder;
  * limitations under the License.
  * #L%
  */
-
 import com.cyc.tool.distributedrepresentations.Word2VecSpace;
 import com.cyc.tool.owltools.OpenCycOwl;
 import java.io.File;
@@ -179,6 +178,76 @@ abstract public class MissingConceptFinder {
    */
   protected Set<AttachmentHypothesis> findNearbyTermsWithGraphCore(String testCase) {
     return findNearbyTermsWithGraphCore(testCase, -1);
+  }
+
+  protected Set<AttachmentHypothesis> findAttachmentHypothesesForConceptMatches(List<ConceptMatch> matches) {
+    long t1 = System.currentTimeMillis();
+    Set<AttachmentHypothesis> hypotheses = new HashSet<>();
+    Set<String> allTypes = new HashSet<>();
+    Map<String, Double> typeWeights = new HashMap<>();
+    Map<String, Double> conceptEvidence = new HashMap<>();
+
+    List<String> termStrings = new ArrayList<>();
+    matches.forEach((ConceptMatch m) -> {
+      termStrings.add(m.getTerm());
+    });
+
+    if (matches.size() == 0) {
+      // assertEquals("common_eiders", matches.get(10).term);
+      System.out.println("Terms [" + termStrings + "] have no words in Word2Vec");
+      return hypotheses; // which is empty at this point
+      // fail("took unexpected exception:" + ex);
+    }
+    IntStream.range(0, matches.size())
+            .forEach(i -> {
+              ConceptMatch m = matches.get(i);
+              //System.out.println(i + " " + m.toString());
+              if (m.concept != null) {
+                allTypes.add(m.concept);
+                typeWeights.put(m.concept,
+                        (typeWeights.containsKey(m.concept) ? typeWeights.get(m.concept) : 0.0d)
+                        + m.similarity);
+              }
+            });
+    allTypes.forEach(s -> {
+      Double weight = typeWeights.get(s);
+      Set<String> transTypes = ocyc.getTypesTransitiveURL(s);
+      Set<String> immedTypes = ocyc.getTypesURL(s);
+
+      Set<String> ret
+              = Stream.concat(
+                      transTypes
+                      .stream()
+                      .filter(type -> allTypes.contains(type)),
+                      immedTypes.stream()
+              ).collect(Collectors.toSet());
+
+      if (!ret.isEmpty()) {
+        ret.forEach(t -> {
+          if (!conceptEvidence.containsKey(t)) {
+            conceptEvidence.put(t, weight);
+          } else {
+            conceptEvidence.put(t, conceptEvidence.get(t) + weight);
+          }
+        });
+
+      }
+    });
+
+    final double max = conceptEvidence.entrySet().stream()
+            .mapToDouble(e -> e.getValue()).max().orElse(0);
+
+    Set<String> maxc = conceptEvidence.entrySet().stream()
+            .filter(e -> e.getValue() == max)
+            .map(e -> e.getKey()).collect(Collectors.toSet());
+    System.out.println("Maximum parent count:" + max);
+    System.out.println("Maximal parents:"
+            + maxc.stream().map(s -> ocyc.labelsForConcept(s) + ": " + s)
+            .collect(Collectors.joining("\n\t")));
+    maxc.forEach(c -> hypotheses.add(new AttachmentHypothesis(-1, termStrings,
+            c, max, ocyc.labelsForConcept(c))));
+    System.out.println("-----" + (System.currentTimeMillis() - t1) + "ms -----");
+    return hypotheses;  // Since we take the max of a double, there should be only one
   }
 
   /**

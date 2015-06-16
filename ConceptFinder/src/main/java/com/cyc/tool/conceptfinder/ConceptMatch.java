@@ -90,6 +90,6 @@ public class ConceptMatch implements Serializable {
 
   @Override
   public String toString() {
-    return term + ": " + similarity + ": " + (concept == null ? "--" : concept);
+    return term + " " + similarity + " " + (concept == null ? "--" : "\"" + concept + "\"");
   }
 }
