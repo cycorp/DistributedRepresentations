@@ -33,7 +33,8 @@ import java.util.logging.Logger;
 public class GoogleNewsW2VSpace extends Word2VecSpaceFromFile {
 
   private static GoogleNewsW2VSpace singleton;
-  private static final String w2vfile = "/cyc/projects/kbTaxonomy/Experiments/ConceptFinder/GoogleNews-vectors-negative300.bin.gz";
+//  private static final String w2vfile = "/cyc/projects/kbTaxonomy/Experiments/ConceptFinder/GoogleNews-vectors-negative300.bin.gz";
+  private static final String w2vfile = "/home/cyc/TaxonomyViewer/data/GoogleNews-vectors-negative300.bin.gz";
 
   private GoogleNewsW2VSpace() throws IOException {
     super();

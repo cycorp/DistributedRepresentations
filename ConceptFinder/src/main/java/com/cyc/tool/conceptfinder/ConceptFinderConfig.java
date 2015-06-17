@@ -28,11 +28,13 @@ import com.cyc.tool.MapDBConfiguration;
  */
 public class ConceptFinderConfig extends MapDBConfiguration {
 
-  private static final String fallBackLocation = "/cyc/projects/kbTaxonomy/Experiments/ConceptFinder/";
+//  private static final String fallBackLocation = "/cyc/pojects/kbTaxonomy/Experiments/ConceptFinder/";
+  private static final String fallBackLocation = "/home/cyc/TaxonomyViewer/data/";
   private static final String missingConceptDBFile = "/missingConcept";
 
   private static final String w2vDBFile = "/w2vdb";
-  private static final String w2vVectorFile = "/cyc/projects/kbTaxonomy/Experiments/ConceptFinder/GoogleNews-vectors-negative300.bin.gz";
+//  private static final String w2vVectorFile = "/cyc/projects/kbTaxonomy/Experiments/ConceptFinder/GoogleNews-vectors-negative300.bin.gz";
+  private static final String w2vVectorFile = "/home/cyc/TaxonomyViewer/data/GoogleNews-vectors-negative300.bin.gz";
   private static final String word2VecVectorsMapName = "word2Vec";
 
   /**
