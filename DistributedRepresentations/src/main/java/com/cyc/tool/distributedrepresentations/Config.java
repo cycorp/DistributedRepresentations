@@ -28,8 +28,8 @@ import com.cyc.tool.MapDBConfiguration;
  */
 public class Config extends MapDBConfiguration {
 
-//  private static final String fallBackDBLocation = "/cyc/projects/kbTaxonomy/Experiments/ConceptFinder/";
-  private static final String fallBackDBLocation = "/home/cyc/TaxonomyViewer/data/";
+  private static final String fallBackDBLocation = "/cyc/projects/kbTaxonomy/Experiments/ConceptFinder/";
+//  private static final String fallBackDBLocation = "/home/cyc/TaxonomyViewer/data/";
 
   private static final String w2vDBFile = "/w2vdb";
 
