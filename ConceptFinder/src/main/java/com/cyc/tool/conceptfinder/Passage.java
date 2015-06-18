@@ -185,12 +185,12 @@ public class Passage {
     } catch (IndexOutOfBoundsException indexEx2) {
       System.out.println("Processing complete");
     }
-//    System.out.println("Attachment Hypotheses for this passage: ");
-//    hypothesesForPassage.forEach((Set<AttachmentHypothesis> hyps) -> {
-//      hyps.forEach((AttachmentHypothesis h) -> {
-//        System.out.println(h + "\n");
-//      });
-//    });
+    System.out.println("Attachment Hypotheses for this passage: ");
+    hypothesesForPassage.forEach((Set<AttachmentHypothesis> hyps) -> {
+      hyps.forEach((AttachmentHypothesis h) -> {
+        System.out.println(h + "\n");
+      });
+    });
     for (List<ConceptMatch> matchList : matchesForPassage) {
       allMatches.addAll(matchList);
     }
@@ -203,19 +203,18 @@ public class Passage {
       if (!matches.isEmpty()) {
         System.out.println("Good Chunk: [" + chunk + "]");
         matchesForPassage.add(matches);
-//        Set<AttachmentHypothesis> hyp = mcf.findAttachmentHypothesesForConceptMatches(matches);
-//        hypothesesForPassage.add(hyp);
-//        for (AttachmentHypothesis h : hyp) {
-//          System.out.println("Hypothesis \"" + chunk + "\" " + h.score + " " + h.conceptURI + " \"" + h.targetTerms + "\"");
-//        }
+        Set<AttachmentHypothesis> hyp = mcf.findAttachmentHypothesesForConceptMatches(matches);
+        hypothesesForPassage.add(hyp);
+        for (AttachmentHypothesis h : hyp) {
+          System.out.println("Hypothesis \"" + chunk + "\" " + h.score + " " + h.conceptURI + " \"" + h.targetTerms + "\"");
+        }
       } else {
         System.out.println("Failed Chunk: [" + chunk + "]");
       }
 
     } else {
-      System.out.println("StopWord Chunk: [" + chunk + "]");
+      System.out.println("Bad Chunk: [" + chunk + "]");
     }
-    System.out.flush();
   }
 
   private List<ConceptMatch> runChunk(String chunk) throws Exception {
