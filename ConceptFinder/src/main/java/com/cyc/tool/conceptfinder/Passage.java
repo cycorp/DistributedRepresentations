@@ -28,13 +28,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
 /**
@@ -54,7 +50,7 @@ public class Passage {
   static MissingConceptFinder mcf;
 
   List<List<ConceptMatch>> matchesForPassage = new ArrayList<>();
-  Set<Set<AttachmentHypothesis>> hypothesesForPassage = new HashSet<>();
+//  Set<Set<AttachmentHypothesis>> hypothesesForPassage = new HashSet<>();
 
   String[] stops = {"the", "and", "to", "of", "a", "I", "in", "was", "he", "that", "it", "his", "her", "you", "as", "had", "with", "for", "she", "not", "at", "but", "be",
     "my", "on", "have", "him", "is", "me", "which", "by", "so", "this", "all", "from", "they", "no", "were", "if", "would", "or", "when", "what", "there",
@@ -185,12 +181,12 @@ public class Passage {
     } catch (IndexOutOfBoundsException indexEx2) {
       System.out.println("Processing complete");
     }
-    System.out.println("Attachment Hypotheses for this passage: ");
-    hypothesesForPassage.forEach((Set<AttachmentHypothesis> hyps) -> {
-      hyps.forEach((AttachmentHypothesis h) -> {
-        System.out.println(h + "\n");
-      });
-    });
+//    System.out.println("Attachment Hypotheses for this passage: ");
+//    hypothesesForPassage.forEach((Set<AttachmentHypothesis> hyps) -> {
+//      hyps.forEach((AttachmentHypothesis h) -> {
+//        System.out.println(h + "\n");
+//      });
+//    });
     for (List<ConceptMatch> matchList : matchesForPassage) {
       allMatches.addAll(matchList);
     }
@@ -198,22 +194,23 @@ public class Passage {
   }
 
   private void processChunk(String chunk) throws Exception {
+    System.out.println("Trying: [" + chunk + "]");
     if (!stopwords.contains(chunk.toLowerCase().trim())) {
       List<ConceptMatch> matches = runChunk(chunk);
       if (!matches.isEmpty()) {
         System.out.println("Good Chunk: [" + chunk + "]");
         matchesForPassage.add(matches);
-        Set<AttachmentHypothesis> hyp = mcf.findAttachmentHypothesesForConceptMatches(matches);
-        hypothesesForPassage.add(hyp);
-        for (AttachmentHypothesis h : hyp) {
-          System.out.println("Hypothesis \"" + chunk + "\" " + h.score + " " + h.conceptURI + " \"" + h.targetTerms + "\"");
-        }
+//        Set<AttachmentHypothesis> hyp = mcf.findAttachmentHypothesesForConceptMatches(matches);
+//        hypothesesForPassage.add(hyp);
+//        for (AttachmentHypothesis h : hyp) {
+//          System.out.println("Hypothesis \"" + chunk + "\" " + h.score + " " + h.conceptURI + " \"" + h.targetTerms + "\"");
+//        }
       } else {
         System.out.println("Failed Chunk: [" + chunk + "]");
       }
 
     } else {
-      System.out.println("Bad Chunk: [" + chunk + "]");
+      System.out.println("Stop Word Chunk: [" + chunk + "]");
     }
   }
 
@@ -222,13 +219,13 @@ public class Passage {
 
     if (mySpace.knownTerm(chunk)) {
       matches.addAll(cSpace.findNearestNForIn(chunk, 40, ocyc));
-      matches.forEach((ConceptMatch m) -> {
-        String s = m.getConcept();
-        if (m.getConcept().contains("Mx8Ngh4rqxlZXxIZQ0GDuIxdQozqTh4rwQB0M5wpEbGdrcN5Y29ycA")) {
-          System.out.println(m);
-        }
-
-      });
+//      matches.forEach((ConceptMatch m) -> {
+//        String s = m.getConcept();
+//        if (m.getConcept().contains("Mx8Ngh4rqxlZXxIZQ0GDuIxdQozqTh4rwQB0M5wpEbGdrcN5Y29ycA")) {
+//          System.out.println(m);
+//        }
+//
+//      });
       return matches;
     } else {
       throw new Exception("Exact match not found, examine a smaller chunk.");
