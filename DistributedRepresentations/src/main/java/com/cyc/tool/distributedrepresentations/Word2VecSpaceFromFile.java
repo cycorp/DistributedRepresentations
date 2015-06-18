@@ -49,10 +49,10 @@ public abstract class Word2VecSpaceFromFile extends Word2VecSpace {
    * @throws IOException
    */
   public Word2VecSpaceFromFile() throws IOException {
-//    db = DBMaker.newFileDB(new File(Config.getW2vDBFile()))
-//            .closeOnJvmShutdown()
-//            //      .encryptionEnable("password")
-//            .make();
+    db = DBMaker.newFileDB(new File(Config.getW2vDBFile()))
+            .closeOnJvmShutdown()
+            //      .encryptionEnable("password")
+            .make();
 
   }
 
@@ -79,18 +79,17 @@ public abstract class Word2VecSpaceFromFile extends Word2VecSpace {
                                 for (int w = 0; w < words; w++) {
                                   float[] v = new float[getSize()];
                                   String key = getVocabString(data_in);
-                                  
+                                  System.out.println(w + ":\t" + key);
 
                                   IntStream.range(0, getSize()).forEach(i -> v[i]
                                           = getFloat(data_in));
                                   vectors.put(key, normVector(v));
                                   if (w % 100000 == 1) {
-                                    System.out.println(w + ":\t" + key);
-//                                    db.commit();
+                                    db.commit();
                                   }
                                 }
-//                                db.commit();
-//                                db.compact();
+                                db.commit();
+                                db.compact();
                               }
                             }
   }

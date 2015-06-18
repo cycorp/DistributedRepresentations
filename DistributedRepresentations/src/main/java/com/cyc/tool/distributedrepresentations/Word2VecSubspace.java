@@ -22,8 +22,6 @@ package com.cyc.tool.distributedrepresentations;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 import org.mapdb.DBMaker;
@@ -47,14 +45,13 @@ public abstract class Word2VecSubspace extends Word2VecSpace {
   protected Word2VecSubspace(Word2VecSpace ofSpace, Predicate<String> includeIf, String persistLoc) throws IOException {
 
     mySuperSpace = ofSpace;
-//    if (db == null) {
-//      db = DBMaker.newFileDB(new File(Config.getW2vDBFile()))
-//              .closeOnJvmShutdown()
-//              //      .encryptionEnable("password")
-//              .make();
-//    }
-    vectors = new HashMap<>();
-//    vectors = db.getTreeMap(persistLoc);
+    if (db == null) {
+      db = DBMaker.newFileDB(new File(Config.getW2vDBFile()))
+              .closeOnJvmShutdown()
+              //      .encryptionEnable("password")
+              .make();
+    }
+    vectors = db.getTreeMap(persistLoc);
     // vectors.clear();
     if (!vectors.isEmpty()) {
       setSize(vectors.values().iterator().next().length);
@@ -67,9 +64,9 @@ public abstract class Word2VecSubspace extends Word2VecSpace {
     newvectors.entrySet().forEach(e -> {
       vectors.put(e.getKey(), e.getValue());
     });
-//    db.commit();
-//    db.compact();
-//    db.commit();
+    db.commit();
+    db.compact();
+    db.commit();
     System.out.println("Vectors filtered and persisted.");
   }
 
@@ -79,10 +76,6 @@ public abstract class Word2VecSubspace extends Word2VecSpace {
    */
   public Word2VecSpace getSuperSpace() {
     return mySuperSpace;
-  }
-  
-  public void persistTo(Path file) {
-    
   }
 
 }

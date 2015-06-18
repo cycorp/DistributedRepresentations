@@ -21,7 +21,6 @@ package com.cyc.tool.distributedrepresentations;
  */
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,13 +33,12 @@ import java.util.logging.Logger;
 public class GoogleNewsW2VSpace extends Word2VecSpaceFromFile {
 
   private static GoogleNewsW2VSpace singleton;
-  private static final String w2vfile = "/fastscratch/GoogleNews-vectors-negative300.bin.gz";
-//  private static final String w2vfile = "/home/cyc/TaxonomyViewer/data/GoogleNews-vectors-negative300.bin.gz";
+//  private static final String w2vfile = "/cyc/projects/kbTaxonomy/Experiments/ConceptFinder/GoogleNews-vectors-negative300.bin.gz";
+  private static final String w2vfile = "/local/cyc/data/GoogleNews-vectors-negative300.bin.gz";
 
   private GoogleNewsW2VSpace() throws IOException {
     super();
-    vectors = new HashMap<>();
-//    vectors = db.getTreeMap(getWord2VecVectorsMapName());
+    vectors = db.getTreeMap(getWord2VecVectorsMapName());
     if (!vectors.isEmpty()) {
       assert (getVector("snowcapped_Caucasus") != null);
       setSize(getVector("dog").length);
