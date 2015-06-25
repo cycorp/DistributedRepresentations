@@ -38,7 +38,7 @@ import org.mapdb.DB;
 public abstract class Word2VecSpace {
 
   private int size;
-  DB db;
+//  DB db;
   Map<String, float[]> vectors;
   long words;
 
@@ -111,18 +111,18 @@ public abstract class Word2VecSpace {
    *
    * @return the db
    */
-  public DB getDb() {
-    return db;
-  }
+//  public DB getDb() {
+//    return db;
+//  }
 
   /**
    * Set up the DB.
    *
    * @param db
    */
-  public void setDb(DB db) {
-    this.db = db;
-  }
+//  public void setDb(DB db) {
+//    this.db = db;
+//  }
 
   /**
    *

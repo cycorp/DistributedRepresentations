@@ -49,10 +49,10 @@ public abstract class Word2VecSpaceFromFile extends Word2VecSpace {
    * @throws IOException
    */
   public Word2VecSpaceFromFile() throws IOException {
-    db = DBMaker.newFileDB(new File(Config.getW2vDBFile()))
-            .closeOnJvmShutdown()
-            //      .encryptionEnable("password")
-            .make();
+//    db = DBMaker.newFileDB(new File(Config.getW2vDBFile()))
+//            .closeOnJvmShutdown()
+//            //      .encryptionEnable("password")
+//            .make();
 
   }
 
@@ -79,21 +79,51 @@ public abstract class Word2VecSpaceFromFile extends Word2VecSpace {
                                 for (int w = 0; w < words; w++) {
                                   float[] v = new float[getSize()];
                                   String key = getVocabString(data_in);
-                                  System.out.println(w + ":\t" + key);
+                                  
 
                                   IntStream.range(0, getSize()).forEach(i -> v[i]
                                           = getFloat(data_in));
                                   vectors.put(key, normVector(v));
                                   if (w % 100000 == 1) {
-                                    db.commit();
+                                    System.out.println(w + ":\t" + key);
+//                                    db.commit();
                                   }
                                 }
-                                db.commit();
-                                db.compact();
+//                                db.commit();
+//                                db.compact();
                               }
                             }
   }
 
+    protected final void createNonNormalizedW2VinDB(String w2vZipFile) throws FileNotFoundException, IOException {
+    try (DataInputStream data_in
+            = new DataInputStream(
+                    new GZIPInputStream(new FileInputStream(
+                                    new File(w2vZipFile))))) {
+                              getWordsAndSize(data_in);
+                              if (vectors.size() == words) {
+                                System.out.println("Word2Vec is in DB");
+                              } else {
+                                System.out.println("DB Size:" + vectors.size());
+
+                                System.out.println("Want to read Word Count: " + words);
+                                System.out.println("Size:" + getSize());
+                                for (int w = 0; w < words; w++) {
+                                  float[] v = new float[getSize()];
+                                  String key = getVocabString(data_in);
+                                  
+
+                                  IntStream.range(0, getSize()).forEach(i -> v[i]
+                                          = getFloat(data_in));
+                                  vectors.put(key, v);
+                                  if (w % 100000 == 1) {
+                                    System.out.println(w + ":\t" + key);
+                                  }
+                                }
+                              }
+                            }
+  }
+  
   private float getFloat(DataInputStream s) {
     try {
       float v = EndianUtils.readSwappedFloat(s);
@@ -121,8 +151,15 @@ public abstract class Word2VecSpaceFromFile extends Word2VecSpace {
       sb.append(ch);
     }
     String[] parts = sb.toString().split("\\s+");
-    words = Long.parseLong(parts[0]);
-    setSize((int) Long.parseLong(parts[1]));
+    
+//for (int i = 0; i < parts[0].replaceAll("\\p{C}", "").length(); ++i) {
+// char a = parts[0].replaceAll("\\p{C}", "").charAt(i);
+// if (!('0' <= a && a <= '9')) {
+//   System.out.println(a + " is not a valid digit!");
+// }
+//}
+    words = Long.parseLong(parts[0].replaceAll("\\p{C}", ""));
+    setSize((int) Long.parseLong(parts[1].replaceAll("\\p{C}", "")));
   }
 
 }

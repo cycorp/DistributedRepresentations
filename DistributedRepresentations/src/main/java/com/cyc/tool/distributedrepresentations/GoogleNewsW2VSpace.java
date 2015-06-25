@@ -21,6 +21,8 @@ package com.cyc.tool.distributedrepresentations;
  */
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,18 +35,33 @@ import java.util.logging.Logger;
 public class GoogleNewsW2VSpace extends Word2VecSpaceFromFile {
 
   private static GoogleNewsW2VSpace singleton;
-//  private static final String w2vfile = "/cyc/projects/kbTaxonomy/Experiments/ConceptFinder/GoogleNews-vectors-negative300.bin.gz";
-  private static final String w2vfile = "/local/cyc/data/GoogleNews-vectors-negative300.bin.gz";
+//  private static final String w2vfile = "/fastscratch/GoogleNews-vectors-negative300.bin.gz";
+//  private static final String w2vfile = "/fastscratch/jmoszko/GoogleNews-OpenCyc-vectors3.bin.gz";
+  private static final String w2vfile = "/local/cyc/data/GoogleNews-OpenCyc-vectors3.bin.gz";
 
   private GoogleNewsW2VSpace() throws IOException {
     super();
-    vectors = db.getTreeMap(getWord2VecVectorsMapName());
+    vectors = new HashMap<>();
+//    vectors = db.getTreeMap(getWord2VecVectorsMapName());
     if (!vectors.isEmpty()) {
       assert (getVector("snowcapped_Caucasus") != null);
       setSize(getVector("dog").length);
       return;
     }
     createW2VinDB(getW2vfile());
+  }
+  
+  //always gets non-normalized versions...
+  private GoogleNewsW2VSpace(Path p) throws IOException {
+    super();
+    vectors = new HashMap<>();
+//    vectors = db.getTreeMap(getWord2VecVectorsMapName());
+    if (!vectors.isEmpty()) {
+      assert (getVector("snowcapped_Caucasus") != null);
+      setSize(getVector("dog").length);
+      return;
+    }
+    createNonNormalizedW2VinDB(p.toString());
   }
 
   /**
@@ -64,6 +81,22 @@ public class GoogleNewsW2VSpace extends Word2VecSpaceFromFile {
     return singleton;
   }
 
+  /**
+   * Factory get method for GoogleNewsW2VSpace.
+   * 
+   * @return a GoogleNewsW2VSpace
+   */
+  public static GoogleNewsW2VSpace get(Path p) {
+    if (singleton == null) {
+      try {
+        singleton = new GoogleNewsW2VSpace(p);
+      } catch (IOException ex) {
+        Logger.getLogger(GoogleNewsW2VSpace.class.getName()).log(Level.SEVERE, null, ex);
+        throw new RuntimeException("Can't create the Google News W2VSpace object " + ex);
+      }
+    }
+    return singleton;
+  }
   private static String getW2vfile() {
     return w2vfile;
   }
