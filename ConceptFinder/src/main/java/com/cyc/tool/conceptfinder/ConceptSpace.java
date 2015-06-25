@@ -29,6 +29,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -38,6 +40,7 @@ import java.util.stream.Collectors;
 public class ConceptSpace {
 
   Word2VecSpace w2vSpace;
+  private static ConceptSpace singleton;
 
   /**
    * Creates a new instance of ConceptSpace.
@@ -47,6 +50,18 @@ public class ConceptSpace {
    */
   public ConceptSpace(Word2VecSpace w2v) throws IOException {
     w2vSpace = w2v;
+  }
+  
+  public static ConceptSpace get(Word2VecSpace w2v) {
+    if (singleton == null) {
+      try {
+        singleton = new ConceptSpace(w2v);
+      } catch (IOException ex) {
+        Logger.getLogger(ConceptSpace.class.getName()).log(Level.SEVERE, null, ex);
+        throw new RuntimeException("Can't create the Google News W2VSpace object " + ex);
+      }
+    }
+    return singleton;
   }
 
   /**

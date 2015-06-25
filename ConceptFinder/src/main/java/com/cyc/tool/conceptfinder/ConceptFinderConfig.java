@@ -33,8 +33,8 @@ public class ConceptFinderConfig extends MapDBConfiguration {
   private static final String missingConceptDBFile = "/missingConcept";
 
   private static final String w2vDBFile = "/w2vdb";
-//  private static final String w2vVectorFile = "/cyc/projects/kbTaxonomy/Experiments/ConceptFinder/GoogleNews-vectors-negative300.bin.gz";
-  private static final String w2vVectorFile = "/local/cyc/data/GoogleNews-vectors-negative300.bin.gz";
+//  private static final String w2vVectorFile = "/fastscratch/jmoszko/GoogleNews-OpenCyc-vectors3.bin.gz";
+  private static final String w2vVectorFile = "/local/cyc/data/GoogleNews-OpenCyc-vectors3.bin.gz";
   private static final String word2VecVectorsMapName = "word2Vec";
 
   /**

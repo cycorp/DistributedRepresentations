@@ -47,7 +47,7 @@ public class Passage {
 
   static Word2VecSpace mySpace;
   static OpenCycOwl ocyc;
-  static MissingConceptFinder mcf;
+//  static MissingConceptFinder mcf;
 
   List<List<ConceptMatch>> matchesForPassage = new ArrayList<>();
 //  Set<Set<AttachmentHypothesis>> hypothesesForPassage = new HashSet<>();
@@ -73,9 +73,9 @@ public class Passage {
       shortText = text.replaceAll("[^a-zA-Z ]", "").trim();
     }
     mySpace = GoogleNewsW2VSpace.get();
-    cSpace = new ConceptSpace(mySpace);
-    ocyc = new OpenCycOwl();
-    mcf = new MissingConceptFinderDefault(mySpace, ocyc, cSpace);
+    cSpace = ConceptSpace.get(mySpace);
+    ocyc = OpenCycOwl.get();
+//    mcf = new MissingConceptFinderDefault(mySpace, ocyc, cSpace);
   }
 
   /**
