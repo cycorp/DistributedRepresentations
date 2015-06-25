@@ -68,7 +68,8 @@ import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
  */
 public class OpenCycOwl {
 
-
+private static OpenCycOwl singleton;
+  
   static final String ocycLocation = OwlToolsConfig.ocycLocation;
 
   /**
@@ -134,6 +135,20 @@ public class OpenCycOwl {
     this.createTypeGraph();
     conceptLabels = new HashMap<>();
     this.fillConceptLabels();
+  }
+  
+   public static OpenCycOwl get() {
+    if (singleton == null) {
+      try {
+        singleton = new OpenCycOwl();
+      } catch (OWLOntologyCreationException ex) {
+        Logger.getLogger(OpenCycOwl.class.getName()).log(Level.SEVERE, null, ex);
+        throw new RuntimeException("Can't create the Google News W2VSpace object " + ex);
+      } catch (IOException ex) {
+        Logger.getLogger(OpenCycOwl.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+    return singleton;
   }
 
   /**
